@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & HPC Exploratorium - Carleton University</title>
+    <!-- Static Tailwind CSS build -->
+    <link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Animate.css for CSS animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter and Merriweather -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif; /* Fallback font */
+        }
+        /* Custom scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Card animations */
+        .card-animate {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .card-animate.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .board-card-left {
+            transform: translateX(-50px);
+        }
+        .board-card-right {
+            transform: translateX(50px);
+        }
+        .board-card-left.visible,
+        .board-card-right.visible {
+            transform: translateX(0);
+        }
+        /* Red-black-white color scheme */
+        .bg-red-gradient {
+            background: linear-gradient(to right, #A6192E, #000000);
+        }
+        .text-red-700 {
+            color: #A6192E;
+        }
+        .bg-red-700 {
+            background-color: #A6192E;
+        }
+        .hover\:bg-red-800:hover {
+            background-color: #8B1625;
+        }
+        /* Hero section background with image and overlay */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('landingPCB.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* Fallback to gradient if image fails */
+            background-color: #A6192E;
+        }
+        /* Elegant typography for hero */
+        .hero-title {
+            font-family: 'Merriweather', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .hero-text {
+            font-family: 'Merriweather', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .hero-hr {
+            border-color: #A6192E;
+            border-width: 1px;
+        }
+        /* Why Learn section */
+        .why-learn-title {
+            font-family: 'Merriweather', serif;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        GitHub Pages Deployment Instructions:
+        1. Create a GitHub repository (e.g., 'ai-hpc-exploratorium').
+        2. Save this file as 'index.html' in the root or '/docs' folder.
+        3. Enable GitHub Pages in repository settings, selecting the 'main' branch and root or '/docs' folder.
+        4. If hosted in a subdirectory (e.g., username.github.io/repo), update <base href="/repo/">.
+        5. Push changes to GitHub, and access the site at username.github.io/repo.
+    -->
+    <div id="root">
+        <!-- Header -->
+        <header class="fixed top-0 w-full bg-white shadow-md z-10">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-red-700">AI & HPC Exploratorium</h1>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-4">
+                    <a href="#home" class="text-black hover:text-red-700">Home</a>
+                    <a href="#why-learn" class="text-black hover:text-red-700">Why AI & HPC</a>
+                    <a href="#what-we-offer" class="text-black hover:text-red-700">What We Offer</a>
+                    <a href="#about" class="text-black hover:text-red-700">About</a>
+                    <a href="#courses" class="text-black hover:text-red-700">Courses</a>
+                    <a href="#software" class="text-black hover:text-red-700">Software & Hardware</a>
+                    <a href="#edi" class="text-black hover:text-red-700">EDI</a>
+                    <a href="#industry" class="text-black hover:text-red-700">Industry</a>
+                    <a href="#contact" class="text-black hover:text-red-700">Contact</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-black focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
+                    </button>
+                </div>
+            </nav>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+                <a href="#home" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Home</a>
+                <a href="#why-learn" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Why AI & HPC</a>
+                <a href="#what-we-offer" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">What We Offer</a>
+                <a href="#about" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">About</a>
+                <a href="#courses" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Courses</a>
+                <a href="#software" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Software & Hardware</a>
+                <a href="#edi" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">EDI</a>
+                <a href="#industry" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Industry</a>
+                <a href="#contact" class="block px-4 py-3 text-black hover:text-red-700 hover:bg-gray-100">Contact</a>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen hero-bg text-white flex items-center pt-24 pb-16 sm:pt-32 sm:pb-24 animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold mb-6 hero-title animate__animated animate__fadeInUp">
+                    Hands-On AI & HPC Learning<br>for Every EE Student
+                </h1>
+                <hr class="hero-hr w-24 mx-auto mb-6">
+                <p class="text-lg sm:text-xl font-normal leading-relaxed max-w-2xl mx-auto hero-text animate__animated animate__fadeInUp animate__delay-1s">
+                    At Carleton University’s Department of Electronics, we recognize that the pace of technological change—particularly in Artificial Intelligence (AI)—is accelerating at an unprecedented rate. Engineers must now be proficient not only in foundational circuit theory and design but also in simulation, modeling, and the strategic use of AI tools. The AI & HPC Exploratorium was created to meet this need, offering students practical exposure to advanced CAD platforms, high-performance computing (HPC) infrastructure, and AI frameworks that are rapidly transforming engineering workflows.
+                    <br><br>
+                    Serving approximately 600 undergraduate students annually, the Exploratorium is a high-end computing facility where students can engage directly with industry-relevant technologies. Equipped with multi-GPU Linux workstations and software platforms such as MATLAB, Cadence, Synopsys, and PyTorch, the lab supports projects ranging from analog circuit simulation and hardware verification to AI-accelerated design and model-based control systems.
+                    <br><br>
+                    Students access structured labs, guided tutorials, and peer-led workshops that demystify both AI and simulation tools. Whether training neural networks, optimizing signal chains, or performing system-level modeling, they build hands-on competence in the tools that define modern electrical engineering practice. The space is designed not only for coursework but also for exploration and experimentation—allowing students to test ideas, fail quickly, and iterate in a resource-rich environment.
+                    <br><br>
+                    By embedding AI and HPC into the undergraduate experience, the Exploratorium ensures our students are equipped for a discipline in transition. It bridges the gap between traditional EE training and the computational paradigms now reshaping everything from biomedical sensing to communication systems. This is where electrical engineers learn to think computationally—and to engineer intelligently.
+                </p>
+            </div>
+        </section>
+
+        <!-- Why Learn AI & HPC Section -->
+        <section id="why-learn" class="py-16 bg-gray-100 animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-8 text-center why-learn-title">Why Learn AI & HPC?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center">
+                    <!-- Left Column: Paragraphs and List -->
+                    <div class="text-lg leading-relaxed">
+                        <p class="mb-4">
+                            AI, modeling, simulation, and high-performance computing are integral to modern applications in areas like autonomous systems, advanced signal processing, and complex system design. They offer the computational power and flexibility essential in today’s engineering landscape.
+                        </p>
+                        <p class="mb-4">
+                            Hands-on experience with these technologies enhances employability and prepares you for industry demands. At Carleton, our students gain practical skills that set them apart in the job market.
+                        </p>
+                        <p class="mb-6"> <!-- Added margin below for spacing -->
+                            The Exploratorium provides access to powerful hardware and software, fostering practical skills over theoretical exercises. This approach ensures you’re ready to tackle real-world engineering challenges.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-lg mt-6"> <!-- Moved list here, added margin top -->
+                            <li>Practical skills with AI toolchains.</li>
+                            <li>CAD, simulation, and system-level design training.</li>
+                            <li>Exposure to HPC and local LLM tools.</li>
+                        </ul>
+                    </div>
+                    <!-- Right Column: Video -->
+                    <div>
+                        <div class="mt-6 md:mt-0"> <!-- Adjust margin for medium screens -->
+                            <video class="w-full rounded-lg shadow-lg video-on-scroll" muted playsinline>
+                                <source src="a_happy_student.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Offer Section -->
+        <section id="what-we-offer" class="py-16 bg-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-4 text-center">What We Offer</h2>
+                <p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+                    The center provides a dynamic learning ecosystem with resources and opportunities to excel in AI, HPC, and advanced system design.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card 1: GPU-Accelerated Workflows -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">🚀</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">GPU-Accelerated Workflows</h3>
+                        <p class="text-gray-700">Engage in practical exercises using GPU-accelerated tools for AI model training, complex simulations, and high-performance data analysis.</p>
+                    </div>
+                    <!-- Card 2: AI and Modeling Projects -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">🧠</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">AI and Modeling Projects</h3>
+                        <p class="text-gray-700">Bring your innovative ideas to life. Tackle projects ranging from developing machine learning models to designing and simulating complex electronic systems.</p>
+                    </div>
+                    <!-- Card 3: Industry Collaboration -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">🏢</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Industry Collaboration</h3>
+                        <p class="text-gray-700">Participate in research projects in collaboration with leading tech companies, addressing real-world challenges in AI, HPC, and CAD tool development.</p>
+                    </div>
+                    <!-- Card 4: Expert Support & Resources -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">🛠️</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Expert Support & Resources</h3>
+                        <p class="text-gray-700">Access curated tutorials, AI framework guides, HPC activities, workshops, and peer assistance from student assistants in a supportive environment.</p>
+                    </div>
+                    <!-- Card 5: Enterprise-Class Linux Workstations -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">💻</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Enterprise-Class Linux Workstations</h3>
+                        <p class="text-gray-700">Get hands-on with powerful Linux workstations equipped with multiple GPUs, fast NVMe storage, and access to leading AI and CAD software suites.</p>
+                    </div>
+                    <!-- Card 6: Multilevel System Design -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <div class="text-4xl text-red-700 mb-4">⚡</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Multilevel System Design</h3>
+                        <p class="text-gray-700">Develop skills progressively, from basic AI model implementation and circuit simulation to complex system-on-chip (SoC) design and HPC cluster utilization.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 bg-gray-100 animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">About the AI & HPC Exploratorium</h2>
+                <p class="text-lg text-gray-700 mb-10 text-center max-w-3xl mx-auto">
+                    The AI & HPC Exploratorium at Carleton University is a dynamic hub where electrical engineering students gain invaluable hands-on experience with Artificial Intelligence and High-Performance Computing. Annually supporting approximately 1,950 students across four core courses, our center is designed to empower learning and innovation.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Card 1: Self-Paced Learning -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center card-animate hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-5xl text-red-700 mb-4">📚</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Self-Paced Learning</h3>
+                        <p class="text-gray-600 text-sm">Explore a rich library of tutorials and guides on AI frameworks and HPC tools at your own speed, building a strong foundation in these advanced concepts.</p>
+                    </div>
+                    <!-- Card 2: Peer Support & Workshops -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center card-animate hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-5xl text-red-700 mb-4">🤝</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Peer Support & Workshops</h3>
+                        <p class="text-gray-600 text-sm">Benefit from collaborative learning through peer support and engaging workshops tailored for students at all skill levels in AI and HPC.</p>
+                    </div>
+                    <!-- Card 3: Culture of Experimentation -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center card-animate hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-5xl text-red-700 mb-4">🔬</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Culture of Experimentation</h3>
+                        <p class="text-gray-600 text-sm">Located in the Department of Electronics, we foster an environment that encourages experimentation with cutting-edge technologies, helping you develop critical skills for modern engineering challenges.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-xl mt-10 text-gray-800"> <!-- Changed bg-red-50 to bg-white -->
+                    <h3 class="text-2xl font-bold text-red-700 mb-5 text-center">Visit Us</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <!-- Left Column: Image -->
+                        <div class="flex justify-center lg:justify-start">
+                            <div class="w-full rounded-lg shadow-md overflow-hidden" style="height: 20rem;"> <!-- Container for cropping, h-80 (20rem) -->
+                                <img src="4174ME.png" alt="Floor layout of Room 4174 Mackenzie Building" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Text Content -->
+                        <div class="space-y-6 text-center lg:text-left">
+                            <div>
+                                <h4 class="text-xl font-semibold text-red-700 mb-2">Location</h4>
+                                <p class="text-lg">Room 4174, Mackenzie Building</p>
+                                <p class="text-md text-gray-600">(Beside the FPGA Drop-In Center)</p>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-red-700 mb-2">Hours of Operation</h4>
+                                <p class="text-lg"><span class="font-semibold">Regular Access:</span> Mon - Fri, 9:30 AM - 5:30 PM</p>
+                                <p class="text-lg mt-1"><span class="font-semibold">Extended Card Swipe Access:</span></p>
+                                <ul class="list-none ml-0 mt-1 text-gray-700">
+                                    <li>Weekdays: Until 11:00 PM</li>
+                                    <li>Weekends: 9:30 AM - 8:00 PM</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promoting Use Section -->
+        <section id="promoting-use" class="py-16 bg-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">Promoting Use</h2>
+                <p class="text-lg text-gray-700 mb-10 text-center max-w-3xl mx-auto">
+                    On many campuses, drop-in centers suffer from underuse and despite good intentions, students often don’t see a compelling reason to visit. At the AI & HPC Exploratorium, we’re deliberately designing against that trend. Here’s how:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <!-- Card 1: Strategic Location -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">📍</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Strategic Location</h3>
+                        <p class="text-gray-600 text-sm">The center is situated directly adjacent to the undergraduate teaching labs, making it easy and natural for students to stop by before, between, or after classes and labs. Convenience eliminates the first barrier to use.</p>
+                    </div>
+                    <!-- Card 2: Expert Peer Support -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">🧑‍🏫</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Expert Peer Support</h3>
+                        <p class="text-gray-600 text-sm">The center will be staffed by knowledgeable student mentors—peers who understand the course material and can offer relevant, real-time assistance. This transforms the space from a passive resource to an active support hub.</p>
+                    </div>
+                    <!-- Card 3: High-Quality Equipment -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">💻</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">High-Quality Equipment</h3>
+                        <p class="text-gray-600 text-sm">We’re investing in top-tier hardware and tools. Students will want to use the space not only because they need help, but because the equipment is better than what’s available elsewhere. The lab experience will feel premium, not remedial.</p>
+                    </div>
+                    <!-- Card 4: Responsive Operating Hours -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">⏰</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Responsive Operating Hours</h3>
+                        <p class="text-gray-600 text-sm">Hours will be aligned with student schedules, especially targeting times when coursework demands are highest. This ensures the center is open when it’s actually needed, including evenings or weekends if required.</p>
+                    </div>
+                    <!-- Card 5: Proactive Promotion -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">📢</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Proactive Promotion</h3>
+                        <p class="text-gray-600 text-sm">We’re not relying on word-of-mouth. The center will be actively promoted through class announcements, department channels, posters, and social media. Students will know it exists, what it offers, and why they should go.</p>
+                    </div>
+                    <!-- Card 6: Course Tie-ins -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-700 mb-4">🔗</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Course Tie-ins</h3>
+                        <p class="text-gray-600 text-sm">The center provides direct support for students enrolled in AI & HPC-related courses, offering tailored assistance for labs, assignments, and projects, ensuring they can successfully apply classroom concepts.</p>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-700 text-center max-w-3xl mx-auto">
+                    By focusing on utility, environment, access, and visibility, the Exploratorium is designed to be used.
+                </p>
+            </div>
+        </section>
+
+        <!-- Supported Courses Section -->
+        <section id="courses" class="py-16 bg-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">Supported Courses</h2>
+                <p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+                    The Exploratorium provides resources and support for a variety of courses, enabling students to apply AI and HPC concepts to their studies.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- ELEC 2501 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 2501</h3>
+                        <p class="text-gray-700">Circuits and Signals: Understanding complex circuit behaviors can be enhanced through simulation tools, allowing students to visualize and analyze signal processing in real-time.</p>
+                    </div>
+                    <!-- ELEC 2507 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 2507</h3>
+                        <p class="text-gray-700">Electronics I: Hands-on experience with AI-driven design tools can aid in the development and testing of electronic components, fostering a deeper comprehension of electronic systems.</p>
+                    </div>
+                    <!-- ELEC 2602 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 2602</h3>
+                        <p class="text-gray-700">Electric Machines and Power: Simulating electric machine operations using high-performance computing can provide insights into efficiency and performance optimization.</p>
+                    </div>
+                    <!-- ELEC 2607 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 2607</h3>
+                        <p class="text-gray-700">Switching Circuits: Leveraging AI algorithms to design and test switching circuits can streamline the learning process and highlight practical applications.</p>
+                    </div>
+                    <!-- ELEC 3500 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 3500</h3>
+                        <p class="text-gray-700">Digital Electronics: Utilizing AI frameworks can assist in the design and simulation of digital systems, enhancing students' understanding of digital logic and circuit design.</p>
+                    </div>
+                    <!-- ELEC 3509 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 3509</h3>
+                        <p class="text-gray-700">Electronics II: Advanced modeling and simulation tools can facilitate the exploration of complex electronic systems, promoting a hands-on learning environment.</p>
+                    </div>
+                    <!-- ELEC 3907 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 3907</h3>
+                        <p class="text-gray-700">Engineering Project: Access to AI and HPC resources can support students in developing innovative solutions and conducting comprehensive analyses for their capstone projects.</p>
+                    </div>
+                    <!-- ELEC 4601 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 4601</h3>
+                        <p class="text-gray-700">Microprocessor Systems: Integrating AI techniques can enhance the design and optimization of microprocessor-based systems, preparing students for industry challenges.</p>
+                    </div>
+                    <!-- ELEC 4907 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md card-animate">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">ELEC 4907</h3>
+                        <p class="text-gray-700">Engineering Research Project: This self-directed research course is ideally suited to benefit from the Exploratorium’s resources, allowing students to implement advanced simulations, leverage AI models, and utilize high-performance infrastructure to pursue original research in electronics and computing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Software and Tools Section -->
+        <section id="software" class="py-16 bg-gray-100 animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-8 text-center">Software and Hardware</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Software</h3>
+                        <p class="text-lg mb-4">Access industry-standard and open-source tools for AI, HPC, and CAD:</p>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li><strong>Cadence Virtuoso</strong>: For custom IC design, simulation, and layout.</li>
+                            <li><strong>Synopsys Design Suite</strong>: Comprehensive tools for digital and analog design.</li>
+                            <li><strong>MATLAB and Simulink</strong>: For numerical computation, simulation, and model-based design.</li>
+                            <li><strong>PyTorch</strong>: Open-source machine learning framework.</li>
+                            <li><strong>TensorFlow</strong>: End-to-end open-source platform for machine learning.</li>
+                            <li><strong>Jupyter Notebooks</strong>: For interactive computing and data analysis.</li>
+                            <li><strong>CUDA Toolkit & cuDNN</strong>: For GPU-accelerated computing.</li>
+                            <li><strong>Slurm Workload Manager</strong>: For managing HPC cluster resources.</li>
+                            <li><strong>Various Compilers & Libraries</strong>: GCC, Clang, OpenMPI, Intel MKL, etc.</li>
+                        </ul>
+                        <p class="text-lg mt-4">Supported by vendor documentation, university programs, and online resources.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Hardware</h3>
+                        <p class="text-lg mb-4">State-of-the-art hardware for demanding computational tasks:</p>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li><strong>Multi-GPU Servers</strong>: High-performance servers with multiple NVIDIA GPUs for AI training and HPC.</li>
+                            <li><strong>Linux Workstations</strong>: Powerful desktop systems with high-core CPUs, ample RAM, and professional GPUs.</li>
+                            <li><strong>High-End Displays</strong>: Large, high-resolution monitors for detailed design and visualization.</li>
+                            <li><strong>NVMe Storage</strong>: Fast solid-state drives for rapid data access and large datasets.</li>
+                            <li><strong>Remote Compute Access</strong>: Secure remote access to HPC clusters and specialized servers.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDI Section -->
+        <section id="edi" class="py-16 bg-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">Equity, Diversity, and Inclusion</h2>
+                <p class="text-lg mb-10 text-gray-700 text-center max-w-3xl mx-auto">
+                    At the AI & HPC Exploratorium, we are dedicated to fostering an educational environment that champions equity, diversity, and inclusion (EDI). We recognize that a multitude of voices and experiences are essential for driving innovation in the field of AI, HPC, and beyond.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                    <!-- Commitment 1: Welcoming All -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-600 mb-4">✨</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Welcoming All</h3>
+                        <p class="text-gray-600 text-sm">We actively encourage participation from individuals of all races, ethnicities, genders, gender identities and expressions, sexual orientations, ages, abilities, socio-economic backgrounds, religions, and all other dimensions of diversity.</p>
+                    </div>
+                    <!-- Commitment 2: Accessible Learning -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-600 mb-4">💡</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Accessible Learning</h3>
+                        <p class="text-gray-600 text-sm">We aim to provide resources and instruction that are accessible and cater to diverse learning styles. We are committed to making reasonable accommodations. Please contact us if you have specific accessibility needs.</p>
+                    </div>
+                    <!-- Commitment 3: Respectful Environment -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate">
+                        <div class="text-5xl text-red-600 mb-4">🤝</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Respectful Environment</h3>
+                        <p class="text-gray-600 text-sm">We are dedicated to maintaining a respectful, collaborative, and harassment-free learning space for all participants, instructors, and staff.</p>
+                    </div>
+                    <!-- Commitment 4: Breaking Down Barriers (Spans 1.5 columns on lg, centered) -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate md:col-span-1 lg:col-start-1 lg:col-span-1">
+                        <div class="text-5xl text-red-600 mb-4">🚀</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Breaking Down Barriers</h3>
+                        <p class="text-gray-600 text-sm">We acknowledge that systemic barriers can discourage individuals from underrepresented groups. Our workshops aim to be a positive, empowering entry point into AI & HPC. This includes outreach with groups like IEEE Women in Engineering.</p>
+                    </div>
+                    <!-- Commitment 5: Empowering Voices -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate md:col-span-1 lg:col-span-1">
+                        <div class="text-5xl text-red-600 mb-4">🗣️</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Empowering Voices</h3>
+                        <p class="text-gray-600 text-sm">We believe that every voice matters. We encourage participants to share their ideas, feedback, and perspectives to help shape the future of the Exploratorium. Your input drives innovation and inclusivity in our programs.</p>
+                    </div>
+                    <!-- Commitment 6: Continuous Improvement -->
+                    <div class="bg-red-50 p-6 rounded-xl shadow-lg flex flex-col items-center text-center card-animate md:col-span-1 lg:col-span-1">
+                         <div class="text-5xl text-red-600 mb-4">🔄</div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Continuous Improvement</h3>
+                        <p class="text-gray-600 text-sm">We are committed to ongoing learning and refinement of our EDI practices and welcome feedback from our community on how we can better serve everyone.</p>
+                    </div>
+                </div>
+
+                <p class="text-lg text-gray-700 text-center max-w-3xl mx-auto">
+                    Join our workshops to gain new skills, connect with peers, and be part of an inclusive tech community.
+                </p>
+            </div>
+        </section>
+
+        <!-- Industry Partnerships Section -->
+        <section id="industry" class="py-16 bg-gray-100 animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">Industry Partnerships</h2>
+                <p class="text-lg mb-4">
+                    The AI & HPC Exploratorium at Carleton University is committed to building strong ties with industry leaders in AI, high-performance computing, and CAD tool development. These partnerships create pathways for job placements and long-term career opportunities in electrical and computer engineering. We collaborate with companies to integrate real-world perspectives and cutting-edge tools into the student experience.
+                </p>
+                <p class="text-lg mb-4">
+                    Many projects at the exploratorium are inspired by or co-developed with our industry partners, ensuring that students work on challenges that mirror current industry needs. This includes optimizing AI models, developing HPC applications, or utilizing advanced CAD tools for complex system design. Such projects provide practical experience that aligns with professional demands, giving students a competitive edge.
+                </p>
+                <p class="text-lg mb-4">
+                    Industry partners actively contribute through workshops, guest lectures, and hackathons, offering hands-on opportunities to collaborate with professionals and explore state-of-the-art applications. These events enhance technical skills and facilitate networking, often leading to internships and job offers. We also seek support for software licensing, access to specialized cloud computing resources, and co-developed learning content to ensure our curriculum remains at the forefront of technological advancements.
+                </p>
+                <p class="text-lg">
+                    Additionally, the exploratorium benefits from strong industry guidance on curriculum development and equipment selection, ensuring that students use the most modern tools and techniques employed by leading companies. This exposure to industry-standard practices prepares students for seamless transitions into professional roles, equipping them with the skills and confidence needed to excel in their future careers in AI, HPC, and beyond.
+                </p>
+            </div>
+        </section>
+
+        <!-- Industry Sponsors Section -->
+        <section id="sponsors" class="py-16 bg-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-red-700 mb-6 text-center">Industry Sponsors</h2>
+                <p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+                    We are proudly supported by leading industry partners who share our commitment to fostering engineering talent and innovation. Their generous contributions and collaboration are invaluable to our success.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 items-center justify-items-center">
+                    <div class="flex justify-center">
+                        <img src="amddLogo.png" alt="AMDD Logo" class="h-20 object-contain">
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="findusLogo.png" alt="Findus Logo" class="h-20 object-contain">
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="zilinkLogo.png" alt="Zilink Logo" class="h-20 object-contain">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-red-700 text-white animate-on-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6">Contact Us</h2>
+                <p class="text-lg mb-4">Reach out to learn more or get involved!</p>
+                <p class="text-lg mb-4">Email: chair@doe..carleton.ca</p>
+                <p class="text-lg">Department of Electronics, Carleton University</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black text-white py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p>© 2025 Carleton University. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Fallback message if scripts fail
+        window.addEventListener('error', () => {
+            document.getElementById('root').innerHTML = '<h1 class="text-center text-2xl mt-10 text-red-700">Error loading page. Please try refreshing or contact support.</h1>';
+        });
+
+        // Scroll-triggered animations and video autoplay
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToObserve = document.querySelectorAll('.animate-on-scroll, .card-animate, video.video-on-scroll');
+            const videoElement = document.querySelector('video.video-on-scroll'); // Get the video element
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add 'visible' class for CSS animations if applicable
+                        if (entry.target.classList.contains('animate-on-scroll') || entry.target.classList.contains('card-animate')) {
+                            entry.target.classList.add('visible');
+                        }
+
+                        // If the element is a video and has 'video-on-scroll', play it
+                        if (entry.target.tagName === 'VIDEO' && entry.target.classList.contains('video-on-scroll')) {
+                            const playPromise = entry.target.play();
+                            if (playPromise !== undefined) {
+                                playPromise.catch(error => {
+                                    console.error("Video autoplay failed:", error);
+                                    // Autoplay was prevented, browser might require user interaction.
+                                });
+                            }
+                        }
+                        // Do not unobserve general .animate-on-scroll elements if they should re-animate on scroll
+                        // Only unobserve video after first play to prevent re-playing
+                        if (!(entry.target.classList.contains('animate-on-scroll') || entry.target.classList.contains('card-animate'))) {
+                             observer.unobserve(entry.target); 
+                        }
+                    }
+                });
+            }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+            elementsToObserve.forEach(el => observer.observe(el));
+
+            // Add click to replay functionality to the video
+            if (videoElement) {
+                videoElement.addEventListener('click', () => {
+                    videoElement.currentTime = 0; // Reset video to the beginning
+                    videoElement.play(); // Play the video
+                });
+            }
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Close mobile menu when a link is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
